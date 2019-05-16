@@ -1,6 +1,10 @@
 # Mines Digital Services
 
-![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend/coverage.svg?label=coverage%3Acore-frontend) ![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend-public/coverage.svg?label=coverage%3Apublic-frontend) ![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Apython-backend/coverage.svg?label=coverage%3Acore-backend)
+![Jenkins](https://img.shields.io/jenkins/build/https/jenkins.com/view/Precise/view/All%20Precise/job/precise-desktop-amd64_default.svg?label=build%3Acore-frontend) ![Sonar Quality Gate](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend/quality_gate.svg?label=quality%20gate%3Acore-frontend) ![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend/coverage.svg?label=coverage%3Acore-frontend)
+![Jenkins](https://img.shields.io/jenkins/build/https/jenkins.com/view/Precise/view/All%20Precise/job/precise-desktop-amd64_default.svg?label=build%3Acore-backend) ![Sonar Quality Gate](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Apython-backend/quality_gate.svg?label=quality%20gate%3Acore-backend) ![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Apython-backend/coverage.svg?label=coverage%3Acore-backend)
+![Jenkins](https://img.shields.io/jenkins/build/https/jenkins.com/view/Precise/view/All%20Precise/job/precise-desktop-amd64_default.svg?label=build%3Apublic-frontend) ![Sonar Quality Gate](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend-public/quality_gate.svg?label=quality%20gate%3Apublic-frontend) ![Sonar Coverage](https://img.shields.io/sonar/https/sonarqube-empr-mds-tools.pathfinder.gov.bc.ca/mds%3Afrontend-public/coverage.svg?label=coverage%3Apublic-frontend)
+
+![License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)
 
 The technologies that support mine oversight for British Columbians need to be reimagined. This project will replace the legacy Mine Management System (MMS) with a scalable, open source, data driven system using modern and flexible technologies.
 

@@ -13,51 +13,46 @@ from ....constants import PARTY_STATUS_CODE
 from ....utils.access_decorators import requires_role_mine_view, requires_role_mine_create
 from ....utils.resources_mixins import UserMixin, ErrorMixin
 from app.api.utils.custom_reqparser import CustomReqparser
+from app.api.parties.response_models import PARTY, MINE_PARTY_APPT
 
 
-class MinePartyApptResource(Resource, UserMixin, ErrorMixin):
+class MinePartyApptListResource(Resource):
     parser = CustomReqparser()
     parser.add_argument('mine_guid', type=str, help='guid of the mine.')
     parser.add_argument('party_guid', type=str, help='guid of the party.')
-    parser.add_argument(
-        'mine_party_appt_type_code',
-        type=str,
-        help='code for the type of appt.',
-        store_missing=False)
-    parser.add_argument('related_guid', type=str, store_missing=False)
-    parser.add_argument(
-        'start_date',
-        type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None,
-        store_missing=False)
-    parser.add_argument(
-        'end_date',
-        type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None,
-        store_missing=False)
+    parser.add_argument('mine_party_appt_type_code', type=str, help='code for the type of appt.')
+    parser.add_argument('related_guid', type=str)
+    parser.add_argument('start_date',
+                        type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None)
+    parser.add_argument('end_date', type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None)
 
-    @api.doc(params={'mine_party_appt_guid': 'mine party appointment serial id'})
+    @api.doc(
+        params={
+            'mine_guid': 'mine_guid to filter by',
+            'party_guid': 'party_guid to filter by',
+            'types': 'mine_party_appt_types to filter by'
+        })
     @requires_role_mine_view
-    def get(self, mine_party_appt_guid=None):
+    @api.marshal_with(MINE_PARTY_APPT, envelope='records', code=200)
+    def get(self):
         relationships = request.args.get('relationships')
         relationships = relationships.split(',') if relationships else []
-        if mine_party_appt_guid:
-            mpa = MinePartyAppointment.find_by_mine_party_appt_guid(mine_party_appt_guid)
-            if not mpa:
-                raise NotFound('Mine Party Appointment not found')
-            result = mpa.json(relationships=relationships)
-        else:
-            mine_guid = request.args.get('mine_guid')
-            party_guid = request.args.get('party_guid')
-            types = request.args.getlist('types')  #list
-            mpas = MinePartyAppointment.find_by(
-                mine_guid=mine_guid, party_guid=party_guid, mine_party_appt_type_codes=types)
-            result = [x.json(relationships=relationships) for x in mpas]
-        return result
 
-    @api.doc(params={'mine_party_appt_guid': 'mine party appointment serial id'})
+        mine_guid = request.args.get('mine_guid')
+        party_guid = request.args.get('party_guid')
+        types = request.args.getlist('types')  #list
+        mpas = MinePartyAppointment.find_by(mine_guid=mine_guid,
+                                            party_guid=party_guid,
+                                            mine_party_appt_type_codes=types)
+
+        if 'party' not in relationships:
+            for mpa in mpas:
+                del mpa.party
+        return mpas
+
+    @api.doc()
     @requires_role_mine_create
-    def post(self, mine_party_appt_guid=None):
-        if mine_party_appt_guid:
-            raise BadRequest('unexpected mine party appointment guid')
+    def post(self):
         data = self.parser.parse_args()
 
         new_mpa = MinePartyAppointment(
@@ -88,8 +83,36 @@ class MinePartyApptResource(Resource, UserMixin, ErrorMixin):
             if "daterange_excl" in str(e):
                 mpa_type_name = MinePartyAppointmentType.find_by_mine_party_appt_type_code(
                     data.get('mine_party_appt_type_code')).description
-                raise BadRequest(f'Error: Date ranges for {mpa_type_name} must not overlap')
+                raise BadRequest(
+                    f'Error: Date ranges for {mpa_type_name} must not overlap, please set end date on existing mine manager appointment'
+                )
         return new_mpa.json()
+
+
+class MinePartyApptResource(Resource, UserMixin, ErrorMixin):
+    parser = CustomReqparser()
+    parser.add_argument('mine_guid', type=str, help='guid of the mine.')
+    parser.add_argument('party_guid', type=str, help='guid of the party.')
+    parser.add_argument('mine_party_appt_type_code',
+                        type=str,
+                        help='code for the type of appt.',
+                        store_missing=False)
+    parser.add_argument('related_guid', type=str, store_missing=False)
+    parser.add_argument('start_date',
+                        type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None,
+                        store_missing=False)
+    parser.add_argument('end_date',
+                        type=lambda x: datetime.strptime(x, '%Y-%m-%d') if x else None,
+                        store_missing=False)
+
+    @api.doc(params={'mine_party_appt_guid': 'mine party appointment serial id'})
+    @requires_role_mine_view
+    @api.marshal_with(MINE_PARTY_APPT)
+    def get(self, mine_party_appt_guid=None):
+        mpa = MinePartyAppointment.find_by_mine_party_appt_guid(mine_party_appt_guid)
+        if not mpa:
+            raise NotFound('Mine Party Appointment not found')
+        return mpa
 
     @api.doc(
         params={
@@ -97,10 +120,8 @@ class MinePartyApptResource(Resource, UserMixin, ErrorMixin):
             'mine party appointment guid, this endpoint only respects form data keys: start_date and end_date, and related_guid'
         })
     @requires_role_mine_create
-    def put(self, mine_party_appt_guid=None):
-        if not mine_party_appt_guid:
-            raise BadRequest('missing mine party appointment guid')
-
+    @api.marshal_with(MINE_PARTY_APPT)
+    def put(self, mine_party_appt_guid):
         data = self.parser.parse_args()
         mpa = MinePartyAppointment.find_by_mine_party_appt_guid(mine_party_appt_guid)
         if not mpa:
@@ -119,16 +140,11 @@ class MinePartyApptResource(Resource, UserMixin, ErrorMixin):
             if "daterange_excl" in str(e):
                 mpa_type_name = mpa.mine_party_appt_type.description
                 raise BadRequest(f'Error: Date ranges for {mpa_type_name} must not overlap.')
-
-        return mpa.json()
+        return mpa
 
     @api.doc(params={'mine_party_appt_guid': 'mine party appointment guid to be deleted'})
     @requires_role_mine_create
-    def delete(self, mine_party_appt_guid=None):
-        if not mine_party_appt_guid:
-            raise BadRequest('Expected mine party appointment guid.')
-
-        data = self.parser.parse_args()
+    def delete(self, mine_party_appt_guid):
         mpa = MinePartyAppointment.find_by_mine_party_appt_guid(mine_party_appt_guid)
         if not mpa:
             raise NotFound('Mine party appointment not found.')

@@ -7,7 +7,7 @@ from werkzeug.exceptions import NotFound
 from app.extensions import api
 from ..models.party import Party
 from ..models.address import Address
-from ...response_models import PARTY
+from app.api.parties.response_models import PARTY
 from ...party_appt.models.mine_party_appt import MinePartyAppointment
 from ....utils.access_decorators import requires_role_mine_view, requires_role_mine_create, requires_role_mine_admin
 from ....utils.resources_mixins import UserMixin, ErrorMixin
@@ -16,82 +16,72 @@ from app.api.utils.custom_reqparser import CustomReqparser
 
 class PartyResource(Resource, UserMixin, ErrorMixin):
     parser = CustomReqparser()
-    parser.add_argument(
-        'first_name',
-        type=str,
-        help='First name of the party, if the party is a person.',
-        store_missing=False)
+    parser.add_argument('first_name',
+                        type=str,
+                        help='First name of the party, if the party is a person.',
+                        store_missing=False)
     parser.add_argument(
         'party_name',
         type=str,
         help='Last name of the party (Person), or the Organization name (Organization).',
         store_missing=False)
-    parser.add_argument(
-        'phone_no',
-        type=str,
-        help='The phone number of the party. Ex: 123-123-1234',
-        store_missing=False)
-    parser.add_argument(
-        'phone_ext',
-        type=str,
-        help='The extension of the phone number. Ex: 1234',
-        store_missing=False)
+    parser.add_argument('phone_no',
+                        type=str,
+                        help='The phone number of the party. Ex: 123-123-1234',
+                        store_missing=False)
+    parser.add_argument('phone_ext',
+                        type=str,
+                        help='The extension of the phone number. Ex: 1234',
+                        store_missing=False)
     parser.add_argument('email', type=str, help='The email of the party.', store_missing=False)
     parser.add_argument('email', type=str, help='The email of the party.', store_missing=False)
-    parser.add_argument(
-        'party_type_code', type=str, help='The type of the party. Ex: PER', store_missing=False)
-    parser.add_argument(
-        'suite_no',
-        type=str,
-        store_missing=False,
-        help='The suite number of the party address. Ex: 123')
-    parser.add_argument(
-        'address_line_1',
-        type=str,
-        store_missing=False,
-        help='The first address line of the party address. Ex: 1234 Foo Road')
-    parser.add_argument(
-        'address_line_2',
-        type=str,
-        store_missing=False,
-        help='The second address line of the party address. Ex: 1234 Foo Road')
-    parser.add_argument(
-        'city',
-        type=str,
-        store_missing=False,
-        help='The city where the party is located. Ex: FooTown')
-    parser.add_argument(
-        'sub_division_code',
-        type=str,
-        store_missing=False,
-        help='The region code where the party is located. Ex: BC')
-    parser.add_argument(
-        'post_code',
-        type=str,
-        store_missing=False,
-        help='The postal code of the party address. Ex: A0B1C2')
-    parser.add_argument(
-        'job_title',
-        type=str,
-        store_missing=False,
-        help='The job title of the party. Ex "Chief of Inspections"')
-    parser.add_argument(
-        'postnominal_letters',
-        type=str,
-        store_missing=False,
-        help='Suffixes for a party name. Ex "BSc, PhD"')
-    parser.add_argument(
-        'idir_username',
-        type=str,
-        store_missing=False,
-        help='The IDIR username of the party. Ex "IDIR\JSMITH"')
+    parser.add_argument('party_type_code',
+                        type=str,
+                        help='The type of the party. Ex: PER',
+                        store_missing=False)
+    parser.add_argument('suite_no',
+                        type=str,
+                        store_missing=False,
+                        help='The suite number of the party address. Ex: 123')
+    parser.add_argument('address_line_1',
+                        type=str,
+                        store_missing=False,
+                        help='The first address line of the party address. Ex: 1234 Foo Road')
+    parser.add_argument('address_line_2',
+                        type=str,
+                        store_missing=False,
+                        help='The second address line of the party address. Ex: 1234 Foo Road')
+    parser.add_argument('city',
+                        type=str,
+                        store_missing=False,
+                        help='The city where the party is located. Ex: FooTown')
+    parser.add_argument('sub_division_code',
+                        type=str,
+                        store_missing=False,
+                        help='The region code where the party is located. Ex: BC')
+    parser.add_argument('post_code',
+                        type=str,
+                        store_missing=False,
+                        help='The postal code of the party address. Ex: A0B1C2')
+    parser.add_argument('job_title',
+                        type=str,
+                        store_missing=False,
+                        help='The job title of the party. Ex "Chief of Inspections"')
+    parser.add_argument('postnominal_letters',
+                        type=str,
+                        store_missing=False,
+                        help='Suffixes for a party name. Ex "BSc, PhD"')
+    parser.add_argument('idir_username',
+                        type=str,
+                        store_missing=False,
+                        help='The IDIR username of the party. Ex "IDIR\JSMITH"')
 
     PARTY_LIST_RESULT_LIMIT = 25
 
-    @api.doc(
-        description='Fetch a party by guid', params={
-            'party_guid': 'guid of the party to fetch',
-        })
+    @api.doc(description='Fetch a party by guid',
+             params={
+                 'party_guid': 'guid of the party to fetch',
+             })
     @requires_role_mine_view
     @api.marshal_with(PARTY, code=200)
     def get(self, party_guid):
@@ -102,8 +92,8 @@ class PartyResource(Resource, UserMixin, ErrorMixin):
         return party
 
     @api.expect(parser)
-    @api.doc(
-        description='Update a party by guid', params={'party_guid': 'guid of the party to update.'})
+    @api.doc(description='Update a party by guid',
+             params={'party_guid': 'guid of the party to update.'})
     @requires_role_mine_create
     @api.marshal_with(PARTY, code=200)
     def put(self, party_guid):
@@ -133,8 +123,8 @@ class PartyResource(Resource, UserMixin, ErrorMixin):
 
         return existing_party
 
-    @api.doc(
-        description='Delete a party by guid', params={'party_guid': 'guid of the party to delete.'})
+    @api.doc(description='Delete a party by guid',
+             params={'party_guid': 'guid of the party to delete.'})
     @requires_role_mine_admin
     def delete(self, party_guid):
         if party_guid is None:

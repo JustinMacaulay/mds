@@ -28,11 +28,3 @@ def test_party_appt_model_find_by(db_session):
 
     mine_party_appts = MinePartyAppointment.find_by()
     assert len(mine_party_appts) == batch_size
-
-
-def test_mine_party_appt_to_csv(db_session):
-    mpa = MinePartyAppointmentFactory()
-
-    csv = MinePartyAppointment.to_csv([mpa], ['processed_by', 'processed_on'])
-    second_row = str(mpa.processed_by) + ',' + str(mpa.processed_on)
-    assert csv == "processed_by,processed_on\n" + second_row

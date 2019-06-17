@@ -52,3 +52,9 @@ PAGINATED_LIST = api.model(
 PAGINATED_PARTY_LIST = api.inherit('PartyList', PAGINATED_LIST, {
     'records': fields.List(fields.Nested(PARTY)),
 })
+
+SUBDIVISION_CODE_MODEL = api.model('SubDivisionCode', {
+    'sub_division_code': fields.String,
+    'description': fields.String,
+    'display_order': fields.Integer
+})

@@ -3,9 +3,13 @@ from app.extensions import api
 from ....utils.access_decorators import requires_role_mine_view
 from ....utils.resources_mixins import UserMixin, ErrorMixin
 from ..models.sub_division_code import SubDivisionCode
+from app.api.parties.response_models import SUBDIVISION_CODE_MODEL
+
 
 class SubDivisionCodeResource(Resource, UserMixin, ErrorMixin):
     @api.doc(params={})
+    
     @requires_role_mine_view
+    @api.marshal_with(SUBDIVISION_CODE_MODEL, envelope='records', code=200)
     def get(self):
-        return { 'options': SubDivisionCode.all_options() }
+        return SubDivisionCode.active_options()

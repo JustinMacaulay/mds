@@ -83,7 +83,7 @@ export class AdminDashboard extends Component {
             <TabPane tab="Mines to be Checked" key="unverifiedMines">
               <div className="tab__content">
                 <div>
-                  <h4>{this.state.unverifiedMines.length}&nbsp;Mines Needing Re-Verification</h4>
+                  <h4>{this.state.unverifiedMines.length}&nbsp;Mines Needing Re-verification</h4>
                   <div>
                     {this.state.unverifiedMines.length > 0 && (
                       <AdminVerifiedMinesList

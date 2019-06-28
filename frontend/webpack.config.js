@@ -118,6 +118,7 @@ const prodConfig = merge([
     },
   },
   parts.clean(),
+  parts.circularDependencyPlugin(),
   parts.hardSourceWebPackPlugin(),
   parts.extractCSS({
     filename: BUILD_FILE_NAMES.css,

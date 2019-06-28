@@ -14,6 +14,8 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 const AntdScssThemePlugin = require("antd-scss-theme-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 
+const CircularDependencyPlugin = require("circular-dependency-plugin");
+
 const postCSSLoader = {
   loader: "postcss-loader",
   options: {
@@ -230,6 +232,16 @@ exports.hardSourceWebPackPlugin = () => ({
         }),
       numWorkers: () => Math.min(require("os").cpus().length, 4),
       minModules: 10,
+    }),
+  ],
+});
+
+exports.circularDependencyPlugin = () => ({
+  plugins: [
+    new CircularDependencyPlugin({
+      exclude: /node_modules/,
+      failOnError: true,
+      cwd: process.cwd(),
     }),
   ],
 });

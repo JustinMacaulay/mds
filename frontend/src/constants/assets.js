@@ -38,3 +38,5 @@ export { default as COMPANY } from "../assets/images/Company.svg";
 export { default as SUBSCRIBE } from "../assets/images/subscribe.svg";
 export { default as UNSUBSCRIBE } from "../assets/images/unsubscribe.svg";
 export { default as YELLOW_HAZARD } from "../assets/images/Hazard.svg";
+export { default as CALENDAR } from "../assets/images/Calendar.svg";
+export { default as CALENDAR_WEEK } from "../assets/images/CalendarWeek.svg";

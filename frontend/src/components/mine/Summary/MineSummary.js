@@ -16,7 +16,7 @@ import * as router from "@/constants/routes";
 import { PermitCard } from "@/components/mine/Permit/MinePermitCard";
 import { TSFCard } from "@/components/mine/Tailings/MineTSFCard";
 import { formatDate } from "@/utils/helpers";
-import { DOC, OVERDUEDOC } from "@/constants/assets";
+import { DOC, OVERDUEDOC, CALENDAR, CALENDAR_WEEK } from "@/constants/assets";
 import { getPermits } from "@/reducers/permitReducer";
 /**
  * @class MineSummary.js contains all content located under the 'Summary' tab on the MineDashboard.
@@ -162,6 +162,41 @@ export const MineSummary = (props) => {
           </Col>
         </Row>
       )}
+      <Row gutter={16} type="flex" justify="center">
+        <Col span={18}>
+          <Row gutter={16}>
+            <Col span={24}>
+              <h4 className="recent-header">LAST ACTIVITY</h4>
+              <label className="recent-days-label">
+                <input type="checkbox" className="recent-days" />
+                <img src={CALENDAR_WEEK} alt="7 Days" className="recent-icon recent-icon-7" />
+                <img src={CALENDAR} alt="30 Days" className="recent-icon recent-icon-30" />
+              </label>
+              <Divider />
+            </Col>
+          </Row>
+          <Row gutter={16} type="flex">
+            <ul className="recent-list">
+              <li>
+                <span className="change-date">July 10, 2019</span>
+                <span className="change-description">Amendment Added to M-132</span>
+              </li>
+              <li>
+                <span className="change-date">July 10, 2019</span>
+                <span className="change-description">Amendment Added to M-132</span>
+              </li>
+              <li>
+                <span className="change-date">July 10, 2019</span>
+                <span className="change-description">Amendment Added to M-132</span>
+              </li>
+              <li>
+                <span className="change-date">July 10, 2019</span>
+                <span className="change-description">Amendment Added to M-132</span>
+              </li>
+            </ul>
+          </Row>
+        </Col>
+      </Row>
       {props.mineComplianceInfo && (
         <Row gutter={16} type="flex" justify="center">
           <Col span={18}>

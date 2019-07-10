@@ -159,15 +159,6 @@
                     }
                   },
                   {
-                    "name": "WEBHOOK_URL",
-                    "valueFrom": {
-                      "secretKeyRef": {
-                        "name": "${WEBHOOK_SECRET_NAME}",
-                        "key": "mds-chatops-db-backup"
-                      }
-                    }
-                  },
-                  {
                     "name": "DATABASE_SERVER_TIMEOUT",
                     "value": "600"
                   },
@@ -238,10 +229,6 @@
       "value": "postgresql"
     },
     {
-      "name": "WEBHOOK_SECRET_NAME",
-      "value": "template.mds-rocket-chat-integrations"
-    },
-    {
       "name": "NFS_VOLUME_IDENTIFIER",
       "description": "Generated identifier of the NFS volume",
       "required": true,
@@ -252,11 +239,11 @@
       "displayName": "Environment Name (Environment Id)",
       "description": "The name or Id of the environment.  This variable is used by the webhook integration to identify the environment in which the backup notifications originate.",
       "required": false,
-      "value": "empr-mds-dev"
+      "value": "production"
     },
     {
       "name": "ENVIRONMENT_FRIENDLY_NAME",
-      "value": "BC Mines Digital Services (DEV)"
+      "value": "MDS Production"
     },
     {
       "name": "VERIFICATION_VOLUME_SIZE",
@@ -267,19 +254,19 @@
     },
     {
       "name": "CPU_REQUEST",
-      "value": "0"
+      "value": "20m"
     },
     {
       "name": "CPU_LIMIT",
-      "value": "0"
+      "value": "100m"
     },
     {
       "name": "MEMORY_REQUEST",
-      "value": "0"
+      "value": "128Mi"
     },
     {
       "name": "MEMORY_LIMIT",
-      "value": "0"
+      "value": "256Mi"
     }
   ]
 }

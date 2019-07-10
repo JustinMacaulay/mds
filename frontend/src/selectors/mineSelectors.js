@@ -10,6 +10,7 @@ export const getMineBasicInfoList = (state) => mineReducer.getMineBasicInfoList(
 export const getMineDocuments = (state) => mineReducer.getMineDocuments(state);
 export const getSubscribedMines = (state) => mineReducer.getSubscribedMines(state);
 export const getMineIncidents = (state) => mineReducer.getMineIncidents(state);
+export const getMineActivity = (state) => mineReducer.getMineActivity(state);
 
 export const getIsUserSubscribed = createSelector(
   [getSubscribedMines, getMineGuid],

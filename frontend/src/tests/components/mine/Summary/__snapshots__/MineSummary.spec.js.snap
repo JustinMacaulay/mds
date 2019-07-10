@@ -72,6 +72,7 @@ ShallowWrapper {
         },
       }
     }
+    mineActivity={Array []}
     mineComplianceInfo={Object {}}
     minePermits={
       Array [

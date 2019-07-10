@@ -34,7 +34,6 @@ ShallowWrapper {
       ]
     }
     openMineIncidentModal={[MockFunction]}
-    openViewMineIncidentModal={[MockFunction]}
   />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -137,7 +136,6 @@ ShallowWrapper {
               "key": undefined,
               "mine_incident_report_no": "2019-70",
               "openMineIncidentModal": [MockFunction],
-              "openViewMineIncidentModal": [MockFunction],
               "reported_by": undefined,
               "reported_timestamp": "Mar 17 2019",
             },
@@ -255,7 +253,6 @@ ShallowWrapper {
             "key": undefined,
             "mine_incident_report_no": "2019-70",
             "openMineIncidentModal": [MockFunction],
-            "openViewMineIncidentModal": [MockFunction],
             "reported_by": undefined,
             "reported_timestamp": "Mar 17 2019",
           },
@@ -377,7 +374,6 @@ ShallowWrapper {
                 "key": undefined,
                 "mine_incident_report_no": "2019-70",
                 "openMineIncidentModal": [MockFunction],
-                "openViewMineIncidentModal": [MockFunction],
                 "reported_by": undefined,
                 "reported_timestamp": "Mar 17 2019",
               },
@@ -495,7 +491,6 @@ ShallowWrapper {
               "key": undefined,
               "mine_incident_report_no": "2019-70",
               "openMineIncidentModal": [MockFunction],
-              "openViewMineIncidentModal": [MockFunction],
               "reported_by": undefined,
               "reported_timestamp": "Mar 17 2019",
             },

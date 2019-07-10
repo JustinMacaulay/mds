@@ -1,5 +1,6 @@
 from sqlalchemy import desc, or_, func
 from app.extensions import db
+from datetime import datetime, timedelta
 
 from app.api.mines.mine.models.mine import Mine
 from app.api.parties.party.models.party import Party
@@ -91,6 +92,29 @@ full_additional_search_targets = {
     }
 }
 
+activity_search_targets = {
+    'mine': {
+        'model': Mine,
+        'primary_column': Mine.mine_guid,
+        'description': 'Mines',
+        'entities_to_return': [Mine.mine_guid, Mine.mine_no, Mine.mine_name, Mine.update_timestamp],
+        'has_deleted_ind': True,
+        'id_field': 'mine_guid',
+        'value_field': 'mine_name',
+        'message': 'Mine information changed.'
+    },
+    'permit': {
+        'model': Permit,
+        'primary_column': Permit.permit_guid,
+        'description': 'Permits',
+        'entities_to_return': [Permit.permit_guid, Permit.permit_no, Permit.update_timestamp],
+        'has_deleted_ind': False,
+        'id_field': 'permit_guid',
+        'value_field': 'permit_no',
+        'message': 'Permit information was changed.'
+    },
+}
+
 simple_search_targets = dict(**common_search_targets, **simple_additional_search_targets)
 search_targets = dict(**common_search_targets, **full_additional_search_targets)
 
@@ -137,6 +161,29 @@ def execute_search(app, search_results, search_term, search_terms, type, type_co
                         append_result(search_results, search_term, type, item,
                                       type_config['id_field'], type_config['value_field'],
                                       type_config['score_multiplier'])
+
+def execute_activity_search(app, search_results, type, type_config, mine_guid, limit_results=None):
+    with app.app_context():
+        activity = db.session.query(type_config['model']).with_entities(
+            *type_config['entities_to_return']).filter(type_config['model'].update_timestamp > (datetime.today() - timedelta(days=30)), type_config['model'].mine_guid == mine_guid)
+
+        if type_config['has_deleted_ind']:
+            activity = activity.filter_by(deleted_ind=False)
+
+        activity = activity.order_by(desc(type_config['model'].update_timestamp))
+        
+        if limit_results:
+            activity = activity.limit(limit_results)
+
+        activity = activity.all()
+
+        for item in activity:
+            search_results.append(SearchResult(None, type, {
+                'date_changed': item.update_timestamp, 
+                'description': type_config['message']
+                }
+                )
+            )
 
 class SearchResult:
     def __init__(self, score, type, result):

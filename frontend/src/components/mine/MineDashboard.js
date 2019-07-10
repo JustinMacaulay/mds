@@ -9,6 +9,7 @@ import { openModal, closeModal } from "@/actions/modalActions";
 import { fetchPermits } from "@/actionCreators/permitActionCreator";
 import {
   fetchMineRecordById,
+  fetchMineActivity,
   updateMineRecord,
   createTailingsStorageFacility,
   removeMineType,
@@ -82,7 +83,6 @@ import MinePermitInfo from "@/components/mine/Permit/MinePermitInfo";
 import MineApplicationInfo from "@/components/mine/Applications/MineApplicationInfo";
 import Loading from "@/components/common/Loading";
 import { formatParamStringToArray } from "@/utils/helpers";
-import { detectProdEnvironment } from "@/utils/environmentUtils";
 import { getUserAccessData } from "@/selectors/authenticationSelectors";
 
 /**
@@ -168,6 +168,7 @@ export class MineDashboard extends Component {
     }
     this.props.fetchMineComplianceCodes();
     this.props.fetchPartyRelationships({ mine_guid: id, relationships: "party" });
+    this.props.fetchMineActivity(id);
     this.props.fetchSubscribedMinesByUser();
     this.props.fetchVarianceDocumentCategoryOptions();
     this.props.fetchVarianceStatusOptions();
@@ -298,7 +299,6 @@ export class MineDashboard extends Component {
   render() {
     const { id } = this.props.match.params;
     const mine = this.props.mines[id];
-    const isDevOrTest = !detectProdEnvironment();
     if (!mine) {
       return <Loading />;
     }
@@ -453,6 +453,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       fetchMineRecordById,
+      fetchMineActivity,
       fetchStatusOptions,
       fetchRegionOptions,
       fetchMineTenureTypes,

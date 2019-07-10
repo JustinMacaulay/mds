@@ -19,6 +19,7 @@ from app.api.users.namespace.users import api as users_api
 from app.api.search.namespace.search import api as search_api
 from app.api.reporting.namespace.reporting import api as reporting_api
 from app.api.variances.namespace.variances import api as variances_api
+from app.api.mine_activity.namespace.mine_activity import api as mine_activity_api
 
 from app.commands import register_commands
 from app.config import Config
@@ -89,6 +90,7 @@ def register_routes(app):
     api.add_namespace(search_api)
     api.add_namespace(variances_api)
     api.add_namespace(reporting_api)
+    api.add_namespace(mine_activity_api)
 
     # Healthcheck endpoint
     @api.route('/health')
@@ -128,7 +130,6 @@ def register_routes(app):
                 _add_sqlalchemy_error_handlers(subclass)
 
     _add_sqlalchemy_error_handlers(SQLAlchemyError)
-
 
     @api.errorhandler(Exception)
     def default_error_handler(error):

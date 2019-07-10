@@ -5,12 +5,13 @@ RUN mkdir /app
 WORKDIR /app
 
 # Install app dependencies
-COPY package.json package-lock.json ./
+COPY . /app/
 
 RUN npm ci
 
-COPY . .
+# Build the app and remove any non-production dependencies
+RUN npm run build
 
 # Run the server
 EXPOSE 3020
-CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "start" ]

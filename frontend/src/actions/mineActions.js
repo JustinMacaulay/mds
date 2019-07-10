@@ -40,3 +40,8 @@ export const storeMineIncidents = (payload) => ({
   type: ActionTypes.STORE_MINE_INCIDENTS,
   payload,
 });
+
+export const storeMineActivity = (payload) => ({
+  type: ActionTypes.STORE_MINE_ACTIVITY,
+  payload,
+});

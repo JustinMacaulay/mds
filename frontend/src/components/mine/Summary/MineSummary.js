@@ -6,6 +6,7 @@ import CustomPropTypes from "@/customPropTypes";
 import PropTypes from "prop-types";
 import { Contact } from "@/components/mine/ContactInfo/PartyRelationships/Contact";
 import { getPartyRelationshipTypes, getPartyRelationships } from "@/selectors/partiesSelectors";
+import { getMineActivity } from "@/selectors/mineSelectors";
 import { getMineComplianceInfo } from "@/selectors/complianceSelectors";
 
 import { connect } from "react-redux";
@@ -27,6 +28,7 @@ const propTypes = {
   partyRelationships: PropTypes.arrayOf(CustomPropTypes.partyRelationship),
   mineComplianceInfo: CustomPropTypes.mineComplianceInfo,
   complianceInfoLoading: PropTypes.bool,
+  // mineActivity: PropTypes.arrayOf(PropTypes.any),
   minePermits: PropTypes.arrayOf(CustomPropTypes.permit).isRequired,
 };
 
@@ -34,6 +36,7 @@ const defaultProps = {
   partyRelationshipTypes: [],
   partyRelationships: [],
   mineComplianceInfo: {},
+  mineActivity: [],
   complianceInfoLoading: true,
 };
 
@@ -284,6 +287,7 @@ export const MineSummary = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+  mineActivity: getMineActivity(state),
   partyRelationships: getPartyRelationships(state),
   partyRelationshipTypes: getPartyRelationshipTypes(state),
   mineComplianceInfo: getMineComplianceInfo(state),

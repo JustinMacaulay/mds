@@ -432,3 +432,17 @@ export const updateMineIncident = (mineGuid, mineIncidentGuid, payload) => (disp
     })
     .catch(() => dispatch(error(reducerTypes.UPDATE_MINE_INCIDENT)));
 };
+
+export const fetchMineActivity = (mine_guid) => (dispatch) => {
+  dispatch(request(reducerTypes.GET_MINE_ACTIVITY));
+  dispatch(showLoading());
+  return CustomAxios()
+    .get(`${ENVIRONMENT.apiUrl}${API.MINE_ACTIVITY(mine_guid)}`, createRequestHeader())
+    .then((response) => {
+      dispatch(success(reducerTypes.GET_MINE_ACTIVITY));
+      dispatch(mineActions.storeMineActivity(response.data));
+      return response;
+    })
+    .catch(() => dispatch(error(reducerTypes.GET_MINE_ACTIVITY)))
+    .finally(() => dispatch(hideLoading()));
+};

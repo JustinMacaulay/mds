@@ -6,7 +6,6 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <MineIncidents
     closeModal={[MockFunction]}
     createMineIncident={[MockFunction]}
-    destroy={[MockFunction]}
     fetchMineIncidents={
       [MockFunction] {
         "calls": Array [
@@ -112,7 +111,6 @@ ShallowWrapper {
       ]
     }
     openModal={[MockFunction]}
-    updateMineIncident={[MockFunction]}
   />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -172,7 +170,6 @@ ShallowWrapper {
             ]
           }
           openMineIncidentModal={[Function]}
-          openViewMineIncidentModal={[Function]}
         />,
       ],
     },
@@ -255,7 +252,6 @@ ShallowWrapper {
             },
           ],
           "openMineIncidentModal": [Function],
-          "openViewMineIncidentModal": [Function],
         },
         "ref": null,
         "rendered": null,
@@ -315,7 +311,6 @@ ShallowWrapper {
               ]
             }
             openMineIncidentModal={[Function]}
-            openViewMineIncidentModal={[Function]}
           />,
         ],
       },
@@ -398,7 +393,6 @@ ShallowWrapper {
               },
             ],
             "openMineIncidentModal": [Function],
-            "openViewMineIncidentModal": [Function],
           },
           "ref": null,
           "rendered": null,

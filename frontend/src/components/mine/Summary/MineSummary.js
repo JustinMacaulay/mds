@@ -28,7 +28,7 @@ const propTypes = {
   partyRelationships: PropTypes.arrayOf(CustomPropTypes.partyRelationship),
   mineComplianceInfo: CustomPropTypes.mineComplianceInfo,
   complianceInfoLoading: PropTypes.bool,
-  // mineActivity: PropTypes.arrayOf(PropTypes.any),
+  mineActivity: PropTypes.arrayOf(PropTypes.any),
   minePermits: PropTypes.arrayOf(CustomPropTypes.permit).isRequired,
 };
 
@@ -177,22 +177,13 @@ export const MineSummary = (props) => {
           </Row>
           <Row gutter={16} type="flex">
             <ul className="recent-list">
-              <li>
-                <span className="change-date">July 10, 2019</span>
-                <span className="change-description">Amendment Added to M-132</span>
-              </li>
-              <li>
-                <span className="change-date">July 10, 2019</span>
-                <span className="change-description">Amendment Added to M-132</span>
-              </li>
-              <li>
-                <span className="change-date">July 10, 2019</span>
-                <span className="change-description">Amendment Added to M-132</span>
-              </li>
-              <li>
-                <span className="change-date">July 10, 2019</span>
-                <span className="change-description">Amendment Added to M-132</span>
-              </li>
+              {props.mineActivity &&
+                props.mineActivity.map((item) => (
+                  <li>
+                    <span className="change-date">{item.date}</span>
+                    <span className="change-description">{item.message}</span>
+                  </li>
+                ))}
             </ul>
           </Row>
         </Col>

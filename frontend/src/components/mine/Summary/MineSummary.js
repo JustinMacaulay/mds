@@ -18,6 +18,7 @@ import { TSFCard } from "@/components/mine/Tailings/MineTSFCard";
 import { formatDate } from "@/utils/helpers";
 import { DOC, OVERDUEDOC, CALENDAR, CALENDAR_WEEK } from "@/constants/assets";
 import { getPermits } from "@/reducers/permitReducer";
+import { IN_DEVELOPMENT } from "@/constants/permissions";
 /**
  * @class MineSummary.js contains all content located under the 'Summary' tab on the MineDashboard.
  */
@@ -145,15 +146,15 @@ export const MineSummary = (props) => {
             </Col>
           </Row>
           <Row gutter={16} type="flex">
-            <label className="recent-days-label">
-              <input type="checkbox" className="recent-days" />
+            <input type="checkbox" className="recent-days" id="recent-days"/>
+            <label className="recent-days-label" for="recent-days">
               <span className="recent-icon-7"><img src={CALENDAR_WEEK} alt="7 Days" className="recent-icon" />View Last 7 Days</span>
               <span className="recent-icon-30"><img src={CALENDAR} alt="30 Days" className="recent-icon" />View Last 30 Days</span>
             </label>
             <ul className="recent-list">
               {props.mineActivity &&
                 props.mineActivity.map((item) => (
-                  <li>
+                  <li className="older">
                     <span className="change-date">{item.date}</span>
                     <span className="change-description">{item.message}</span>
                     <span className="change-user">Theresa Smith</span>

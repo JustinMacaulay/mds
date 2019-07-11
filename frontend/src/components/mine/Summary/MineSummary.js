@@ -180,7 +180,7 @@ export const MineSummary = (props) => {
               {props.mineActivity &&
                 props.mineActivity.map((item) => (
                   <li>
-                    <span className="change-date">{item.date}</span>
+                    <span className="change-date">{formatDate(item.date)}</span>
                     <span className="change-description">{item.message}</span>
                   </li>
                 ))}

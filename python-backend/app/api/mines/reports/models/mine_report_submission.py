@@ -2,11 +2,11 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.schema import FetchedValue
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from app.api.utils.models_mixins import Base
+from app.api.utils.models_mixins import Base, AuditMixin
 from app.extensions import db
 
 
-class MineReportSubmission(Base):
+class MineReportSubmission(AuditMixin, Base):
     __tablename__ = "mine_report_submission"
     mine_report_submission_id = db.Column(
         db.Integer, primary_key=True, server_default=FetchedValue())
@@ -19,6 +19,7 @@ class MineReportSubmission(Base):
     active_ind = db.Column(db.Boolean, server_default=FetchedValue(), nullable=False)
     documents = db.relationship(
         'MineDocument', lazy='selectin', secondary='mine_report_document_xref')
+    mine_report = db.relationship('MineReport', lazy='joined', backref='mine_report_submission')
 
     def __repr__(self):
         return '<MineReportSubmission %r>' % self.mine_report_submission_guid

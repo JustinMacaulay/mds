@@ -13,6 +13,7 @@ from app.api.utils.search import append_result, execute_activity_search, activit
 MINE_ACTIVITY_MODEL = api.model('MineActivity', {
     'date': fields.Date,
     'message': fields.String,
+    'user': fields.String,
 })
 
 
@@ -43,6 +44,7 @@ class MineActivityResource(Resource, UserMixin):
             all_search_results.append({
                 'date': result.result.get('date_changed'),
                 'message': result.result.get('description')
+                'user': result.result.get('user')
             })
         # for type in search_types:
         #     top_search_results_by_type = {}

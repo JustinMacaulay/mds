@@ -164,7 +164,7 @@ export const MineSummary = (props) => {
                     className={
                       moment(item.date, "YYYY-MM-DD").diff(moment().subtract(7, "day")) < 7
                         ? "month"
-                        : "week"
+                        : (moment(item.date, "YYYY-MM-DD").diff(moment().subtract(1, "day")) < 1 ? "week" : "day")
                     }
                   >
                     <span className="change-date">{formatDate(item.date)}</span>

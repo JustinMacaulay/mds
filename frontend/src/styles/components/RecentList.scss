@@ -29,6 +29,15 @@
             width: 10em;
             text-align: right;
         }
+
+        &.day .change-date {
+            color: #5e46a1;
+            font-weight: 700;
+        }
+
+        &.day .change-description{
+            font-weight: 600;
+        }
     }
 }
 

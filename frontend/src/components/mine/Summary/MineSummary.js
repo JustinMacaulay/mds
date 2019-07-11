@@ -159,7 +159,13 @@ export const MineSummary = (props) => {
             <ul className="recent-list">
               {props.mineActivity &&
                 props.mineActivity.map((item) => (
-                  <li>
+                  <li
+                    className={
+                      moment(item.date, "YYYY-MM-DD").diff(moment().subtract(7, "day")) < 7
+                        ? "month"
+                        : "week"
+                    }
+                  >
                     <span className="change-date">{formatDate(item.date)}</span>
                     <span className="change-description">{item.message}</span>
                     <span className="change-user">Theresa Smith</span>

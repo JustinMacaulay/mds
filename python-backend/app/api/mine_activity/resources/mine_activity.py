@@ -43,7 +43,7 @@ class MineActivityResource(Resource, UserMixin):
         for result in search_results:
             all_search_results.append({
                 'date': result.result.get('date_changed'),
-                'message': result.result.get('description')
+                'message': result.result.get('description'),
                 'user': result.result.get('user')
             })
         # for type in search_types:
@@ -69,4 +69,4 @@ class MineActivityResource(Resource, UserMixin):
 
         #     all_search_results[type] = list(top_search_results_by_type.values())
 
-        return all_search_results
+        return sorted(all_search_results, key=lambda x: x['date'], reverse=True)

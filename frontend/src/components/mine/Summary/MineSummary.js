@@ -136,6 +136,39 @@ export const MineSummary = (props) => {
           </Col>
         </Row>
       )}
+      <Row gutter={16} type="flex" justify="center">
+        <Col span={18}>
+          <Row gutter={16}>
+            <Col span={24}>
+              <h4 className="recent-header">LATEST ACTIVITY</h4>
+              <Divider />
+            </Col>
+          </Row>
+          <Row gutter={16} type="flex">
+            <label className="recent-days-label">
+              <input type="checkbox" className="recent-days" />
+              <span className="recent-icon-7">
+                <img src={CALENDAR_WEEK} alt="7 Days" className="recent-icon" />
+                View Last 7 Days
+              </span>
+              <span className="recent-icon-30">
+                <img src={CALENDAR} alt="30 Days" className="recent-icon" />
+                View Last 30 Days
+              </span>
+            </label>
+            <ul className="recent-list">
+              {props.mineActivity &&
+                props.mineActivity.map((item) => (
+                  <li>
+                    <span className="change-date">{formatDate(item.date)}</span>
+                    <span className="change-description">{item.message}</span>
+                    <span className="change-user">Theresa Smith</span>
+                  </li>
+                ))}
+            </ul>
+          </Row>
+        </Col>
+      </Row>
       {props.minePermits && props.minePermits.length > 0 && (
         <Row gutter={16} type="flex" justify="center">
           <Col span={18}>
@@ -162,32 +195,6 @@ export const MineSummary = (props) => {
           </Col>
         </Row>
       )}
-      <Row gutter={16} type="flex" justify="center">
-        <Col span={18}>
-          <Row gutter={16}>
-            <Col span={24}>
-              <h4 className="recent-header">LAST ACTIVITY</h4>
-              <label className="recent-days-label">
-                <input type="checkbox" className="recent-days" />
-                <img src={CALENDAR_WEEK} alt="7 Days" className="recent-icon recent-icon-7" />
-                <img src={CALENDAR} alt="30 Days" className="recent-icon recent-icon-30" />
-              </label>
-              <Divider />
-            </Col>
-          </Row>
-          <Row gutter={16} type="flex">
-            <ul className="recent-list">
-              {props.mineActivity &&
-                props.mineActivity.map((item) => (
-                  <li>
-                    <span className="change-date">{formatDate(item.date)}</span>
-                    <span className="change-description">{item.message}</span>
-                  </li>
-                ))}
-            </ul>
-          </Row>
-        </Col>
-      </Row>
       {props.mineComplianceInfo && (
         <Row gutter={16} type="flex" justify="center">
           <Col span={18}>

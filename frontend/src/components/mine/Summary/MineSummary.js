@@ -154,7 +154,7 @@ export const MineSummary = (props) => {
             <ul className="recent-list">
               {props.mineActivity &&
                 props.mineActivity.map((item) => (
-                  <li className="older">
+                  <li className="month">
                     <span className="change-date">{item.date}</span>
                     <span className="change-description">{item.message}</span>
                     <span className="change-user">Theresa Smith</span>

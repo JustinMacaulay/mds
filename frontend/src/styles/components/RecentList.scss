@@ -54,8 +54,15 @@
         display: block;
     }
 
-    &:checked ~ .recent-list .older  {
+    ~ .recent-list .month  {
+        max-height: 10000px;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+
+    &:checked ~ .recent-list .month  {
         display: none;
+        max-height: 0;
     }
 }
 .recent-icon {

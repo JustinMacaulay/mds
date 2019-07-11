@@ -40,21 +40,24 @@
 .recent-days {
     display: none;
 
-    & ~ .recent-icon-7{
+    & ~ .recent-days-label .recent-icon-7{
         display: block;
         
     }
-    & ~ .recent-icon-30{
+    & ~ .recent-days-label .recent-icon-30{
         display: none;
     }
-    &:checked ~ .recent-icon-7{
+    &:checked ~ .recent-days-label .recent-icon-7{
         display: none;
     }
-    &:checked ~ .recent-icon-30{
+    &:checked ~ .recent-days-label .recent-icon-30{
         display: block;
     }
-}
 
+    &:checked ~ .recent-list .older  {
+        display: none;
+    }
+}
 .recent-icon {
     width: 24px;
     height: 24px;

@@ -55,14 +55,15 @@
     }
 
     ~ .recent-list .month  {
-        max-height: 10000px;
+        max-height: 5em;
         overflow: hidden;
         transition: all 0.3s;
+        opacity: 1;
     }
 
     &:checked ~ .recent-list .month  {
-        display: none;
         max-height: 0;
+        opacity: 0;
     }
 }
 .recent-icon {

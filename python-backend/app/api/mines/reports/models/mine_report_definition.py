@@ -2,11 +2,11 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.schema import FetchedValue
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from app.api.utils.models_mixins import Base
+from app.api.utils.models_mixins import Base, AuditMixin
 from app.extensions import db
 
 
-class MineReportDefinition(Base):
+class MineReportDefinition(AuditMixin, Base):
     __tablename__ = "mine_report_definition"
     mine_report_definition_id = db.Column(
         db.Integer, primary_key=True, server_default=FetchedValue())
